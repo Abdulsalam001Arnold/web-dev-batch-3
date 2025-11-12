@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function CounterBtn() {
     const [count, setCount] = useState(0)
@@ -8,6 +8,10 @@ export default function CounterBtn() {
         setCount(count + 1)
     }
 
+    useEffect(() => {
+        document.title = `Count: ${count}`
+    }, [count])
+
     const handleDecrease = () => {
         if(count > 0) {
             setCount(count - 1)
@@ -15,6 +19,7 @@ export default function CounterBtn() {
     }
     return(
         <div>
+        kojiojbriorjreirejtrjtjtj
     <h1 className="text-2xl ml-6">
             {count}
     </h1>
