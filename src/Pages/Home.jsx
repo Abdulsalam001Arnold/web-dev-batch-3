@@ -34,6 +34,30 @@ export default function Home() {
     <Link to={'/about'}>
         Go to About Page
     </Link>
+
+    <section className="w-full mt-20 flex flex-col items-center justify-center">
+            {items.map((item, index) => (
+                <div
+                key={index}
+                >
+                    <div className="w-full">
+                        <img src={item.image} className="w-16 rounded-full"/>
+                    </div>
+
+                    <h1>
+                        {item.name}
+                    </h1>
+
+                    <p>
+                        Gender: {item.gender}
+                    </p>
+
+                    <p>
+                        Kill counts: {item.ki}
+                    </p>
+                </div>
+            ))}
+    </section>
         </div>
     )
 };
