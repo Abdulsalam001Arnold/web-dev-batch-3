@@ -1,12 +1,15 @@
 
 
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function Login() {
+    const navigate = useNavigate()
     const [loginData, setLoginData] = useState({
         email: "",
         password: ""
     })
+    const [loading, setLoading] = useState(false)
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -18,12 +21,14 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true)
         try {
             const response = await fetch('https://nodeclass-batch3.vercel.app/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: "include",
                 body: JSON.stringify(loginData)
             })
 
@@ -33,38 +38,93 @@ export default function Login() {
 
             const data = await response.json()
             console.log(data)
+            navigate('/')
         } catch (err) {
             console.error(err)
+        }finally{
+            setLoading(false)
+            setLoginData({
+                email: "",
+                password: ""
+            })
         }
     }
 
 
     return(
-        <div className="w-full min-h-screen flex flex-col items-center justify-center">
-            <form
-            className="w-100 shadow-2xl p-6 flex flex-col gap-4 rounded-lg border"
-             >
-                <div className="flex gap-4 items-center justify-center">
-                    <label>
-                        Email:
-                    </label>
-
-                    <input name="email" type="email" id="email" placeholder="Please enter your email" onChange={handleChange} className="border-2 border-gray-700 p-4 rounded-lg"/>
-                </div>
-
-
-                <div className="flex gap-4 items-center justify-center">
-                    <label>
-                        Password:
-                    </label>
-
-                    <input name="password" type="password" id="password" placeholder="Please enter your password" onChange={handleChange} className="border-2 border-gray-700 p-4 rounded-lg"/>
-                </div>
-
-                <button onClick={handleSubmit} type="submit" className="mt-10 cursor-pointer">
-                    Login
-                </button>
-            </form>
+        <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <img
+            alt="Your Company"
+            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+            className="mx-auto h-10 w-auto"
+          />
+          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+            Sign in to your account
+          </h2>
         </div>
+
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form action="#" method="POST" className="space-y-6">
+            <div>
+              <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
+                Email address
+              </label>
+              <div className="mt-2">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  onChange={handleChange}
+                  autoComplete="email"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between">
+                <label htmlFor="password" className="block text-sm/6 font-medium text-gray-900">
+                  Password
+                </label>
+                <div className="text-sm">
+                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                    Forgot password?
+                  </a>
+                </div>
+              </div>
+              <div className="mt-2">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  onChange={handleChange}
+                  autoComplete="current-password"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                />
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                {loading ? 'Signing in......' : 'Sign in'}
+              </button>
+            </div>
+          </form>
+
+          <p className="mt-10 text-center text-sm/6 text-gray-500">
+            Not a member?{' '}
+            <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+              Start a 14 day free trial
+            </a>
+          </p>
+        </div>
+      </div>
     )
 };
