@@ -15,9 +15,9 @@ export const userAuthStore = create((set) => ({
                 method: 'GET',
                 credentials: 'include'
             })
-
             if(response.ok) {
                 const data = await response.json()
+                console.log(data)
                 set({authorized: true, user: data.user})
             }else{
                 set({authorized: false, user: null})
@@ -26,7 +26,6 @@ export const userAuthStore = create((set) => ({
             if(err instanceof Error) {
                 console.error(err.cause)
             }
-
             set({authorized: false, user: null})
         }
     }
