@@ -4,7 +4,8 @@ import Home from "./Pages/Home"
 import About from "./Pages/About"
 import Navbar from "./components/Navbar"
 import Login from './Pages/Login'
-
+import Signup from './Pages/SignUp'
+import ProtectedRoute from './components/ProtectedRoute'
 function App() {
   return (
       <>
@@ -12,9 +13,15 @@ function App() {
         <Navbar/>
           <Routes>
             <Route path="/" element={<Home/>}/>
-            <Route path="/about" element={<About/>}/>
+            <Route path="/about" element={
+            <ProtectedRoute>
+            <About/>
+            </ProtectedRoute>
+            }/>
             <Route path="/contact" element={<Contact/>}/>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/signup" element={<Signup/>}/>
+
           </Routes>
         </BrowserRouter>
       </>
