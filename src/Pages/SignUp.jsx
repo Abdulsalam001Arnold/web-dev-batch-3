@@ -1,12 +1,11 @@
 
 
-
-
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
-
+import { userAuthStore } from "../store/authStore"
 export default function Signup() {
     const navigate = useNavigate()
+    const {setAuthorized, setUser} = userAuthStore()
     const [signupData, setSignupData] = useState({
         name: "",
         email: "",
@@ -44,6 +43,8 @@ export default function Signup() {
 
             const data = await response.json()
             console.log(data)
+            setAuthorized(true)
+            setUser(data.data.populatedUser)
             navigate('/')
         } catch (err) {
             console.error(err)

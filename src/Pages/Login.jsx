@@ -2,9 +2,10 @@
 
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-
+import { userAuthStore } from "../store/authStore"
 export default function Login() {
     const navigate = useNavigate()
+    const {setAuthorized, setUser} = userAuthStore()
     const [loginData, setLoginData] = useState({
         email: "",
         password: ""
@@ -37,6 +38,8 @@ export default function Login() {
             }
 
             const data = await response.json()
+            setAuthorized(true)
+            setUser(data.data.existingUser)
             console.log(data)
             navigate('/')
         } catch (err) {

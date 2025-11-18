@@ -1,8 +1,9 @@
 
 import { useNavigate } from "react-router-dom"
-
+import { userAuthStore } from "../store/authStore"
 export default function About() {
     const navigate = useNavigate()
+    const {user} = userAuthStore()
     const handlePress = () => {
         navigate('/')
     }
@@ -11,6 +12,10 @@ export default function About() {
         <h1>
             About page!
         </h1>
+
+        <h3>
+            {user.name}
+        </h3>
 
         <button onClick={handlePress}>
             Navigate programatically!
