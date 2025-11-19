@@ -3,6 +3,8 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { userAuthStore } from "../store/authStore"
+import { toast, ToastContainer } from "react-toastify"
+
 export default function Login() {
     const navigate = useNavigate()
     const {setAuthorized, setUser} = userAuthStore()
@@ -34,12 +36,19 @@ export default function Login() {
             })
 
             if(!response.ok) {
+              toast.error("Login failed! Please check your credentials.", {
+                position: "top-right",
+                autoClose: 5000,
+                theme: "dark"
+              })
+              console.log(response)
                 throw new Error('Login failed')
             }
 
             const data = await response.json()
             setAuthorized(true)
             setUser(data.data.existingUser)
+            toast.success("Login successful! Welcome back.")
             console.log(data)
             navigate('/')
         } catch (err) {
@@ -56,6 +65,7 @@ export default function Login() {
 
     return(
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <ToastContainer/>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="Your Company"

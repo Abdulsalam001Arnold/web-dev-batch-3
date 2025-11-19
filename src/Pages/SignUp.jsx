@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { userAuthStore } from "../store/authStore"
+import { toast, ToastContainer } from "react-toastify"
 export default function Signup() {
     const navigate = useNavigate()
     const {setAuthorized, setUser} = userAuthStore()
@@ -38,6 +39,11 @@ export default function Signup() {
             })
 
             if(!response.ok) {
+              toast.error("Sign up failed! Please try again.", {
+                position: "top-right",
+                theme: "dark",
+                autoClose: 5000,
+              })
                 throw new Error('Sign up failed')
             }
 
@@ -45,7 +51,8 @@ export default function Signup() {
             console.log(data)
             setAuthorized(true)
             setUser(data.data.populatedUser)
-            navigate('/')
+            toast.success("Sign up successful! Welcome aboard.")
+            // navigate('/')
         } catch (err) {
             console.error(err)
         }finally{
@@ -64,6 +71,7 @@ export default function Signup() {
 
     return(
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8  border border-gray-500 shadow-2xl">
+        <ToastContainer/>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
             Sign in to your account

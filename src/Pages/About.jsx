@@ -14,7 +14,7 @@ export default function About() {
         </h1>
 
         <h3>
-            {user.name}
+            {user.email}
         </h3>
 
         <button onClick={handlePress}>
