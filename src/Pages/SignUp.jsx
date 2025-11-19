@@ -4,8 +4,17 @@ import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { userAuthStore } from "../store/authStore"
 import { toast, ToastContainer } from "react-toastify"
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
+
+
 export default function Signup() {
     const navigate = useNavigate()
+    const [showPassword, setShowPassword] = useState(false)
+
+    const handleClick = () => {
+      setShowPassword(!showPassword)
+    }
     const {setAuthorized, setUser} = userAuthStore()
     const [signupData, setSignupData] = useState({
         name: "",
@@ -127,16 +136,22 @@ export default function Signup() {
                   </a>
                 </div>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   required
                   onChange={handleChange}
                   autoComplete="current-password"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
+                <div
+                className="absolute right-3 top-3 cursor-pointer text-gray-600"
+                onClick={handleClick}
+                >
+                  {showPassword ? <FaEyeSlash/> : <FaEye/>}
+                </div>
               </div>
             </div>
 
@@ -144,7 +159,7 @@ export default function Signup() {
               <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                 Age
               </label>
-              <div className="mt-2">
+              <div className="mt-2 relative">
                 <input
                   id="age"
                   name="age"
@@ -154,6 +169,8 @@ export default function Signup() {
                   autoComplete="age"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
+
+                
               </div>
             </div>
 
