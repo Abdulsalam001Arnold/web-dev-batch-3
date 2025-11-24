@@ -3,6 +3,8 @@ import CounterBtn from "../components/CounterBtn";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import Loader from '../components/Loader'
+
 
 export default function Home() {
     const [items, setItems] = useState([])
@@ -75,7 +77,7 @@ export default function Home() {
     <button className="text-white bg-red-600 p-4 cursor-pointer rounded-3xl w-[10rem]"
     onClick={handleLogout}
     >
-        {loading ? 'Logging out.... please wait' : 'Logout'}
+        {loading ? <Loader/> : 'Logout'}
     </button>
 
     <section className="w-full mt-20 flex flex-col items-center justify-center">
